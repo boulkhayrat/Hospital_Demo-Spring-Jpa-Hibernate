@@ -1,1 +1,1 @@
-# Hospital_Demo-SpringJpa-Hibernate-
+# Demo for A Hospital app using Spring Jpa and Hibernate
