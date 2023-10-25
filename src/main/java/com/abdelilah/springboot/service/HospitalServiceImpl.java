@@ -1,5 +1,6 @@
 package com.abdelilah.springboot.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -58,6 +59,12 @@ public class HospitalServiceImpl implements IHospitalService {
 	public Consultation saveConsultation(Consultation consultation) {
 		// TODO Auto-generated method stub
 		return consultationRepository.save(consultation);
+	}
+
+	@Override
+	public List<Patient> findAllPatients() {
+		return patientRepository.findAll();
+		
 	}
 
 }
