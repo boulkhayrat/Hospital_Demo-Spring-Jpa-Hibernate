@@ -28,11 +28,6 @@ public class SpringbootHibernateOnetomanyOnetooneApplication {
 	}
 	
 	
-	/**
-	 * @param patientRepository
-	 * @param medecinRepository
-	 * @return
-	 */
 	@Bean
 	CommandLineRunner start(IHospitalService hospitalService, PatientRepository patientRepository, MedecinRepository medecinRepository, RendezVousRepository rendezVousRepository) {
 		return args -> {
