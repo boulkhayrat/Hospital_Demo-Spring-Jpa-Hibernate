@@ -34,11 +34,7 @@ public class PatientRestController {
         return hospitalService.savePatient(patient);
     }
 
-    @PostMapping("/medecin")
-    public Medecin saveMedecin(@RequestBody Medecin medecin) {
-        return hospitalService.saveMedecin(medecin);
-    }
-
+   
     @PostMapping("/rendezvous")
     public RendezVous saveRendezVous(@RequestBody RendezVous rendezVous) {
         return hospitalService.saveRdv(rendezVous);
