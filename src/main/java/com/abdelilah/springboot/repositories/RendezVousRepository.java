@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.abdelilah.springboot.entities.RendezVous;
 
-public interface RendezVousRepository extends JpaRepository<RendezVous, String>{
+public interface RendezVousRepository extends JpaRepository<RendezVous, Long>{
 
 }

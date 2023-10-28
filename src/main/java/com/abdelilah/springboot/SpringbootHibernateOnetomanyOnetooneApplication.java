@@ -13,10 +13,10 @@ import com.abdelilah.springboot.entities.Medecin;
 import com.abdelilah.springboot.entities.Patient;
 import com.abdelilah.springboot.entities.RendezVous;
 import com.abdelilah.springboot.entities.StatusRDV;
-import com.abdelilah.springboot.repositories.MedecinRepository;
-import com.abdelilah.springboot.repositories.PatientRepository;
-import com.abdelilah.springboot.repositories.RendezVousRepository;
-import com.abdelilah.springboot.service.IHospitalService;
+import com.abdelilah.springboot.service.IConsultationService;
+import com.abdelilah.springboot.service.IMedecinService;
+import com.abdelilah.springboot.service.IPatientService;
+import com.abdelilah.springboot.service.IRendezVousService;
 
 @SpringBootApplication
 public class SpringbootHibernateOnetomanyOnetooneApplication {
@@ -29,7 +29,7 @@ public class SpringbootHibernateOnetomanyOnetooneApplication {
 	
 	
 	@Bean
-	CommandLineRunner start(IHospitalService hospitalService, PatientRepository patientRepository, MedecinRepository medecinRepository, RendezVousRepository rendezVousRepository) {
+	CommandLineRunner start(IPatientService patientService, IMedecinService medecinService, IRendezVousService rendezVousService, IConsultationService consultationService) {
 		return args -> {
 			Stream.of("Mohamed","Ahmed","Mostafa")
 				.forEach(name -> {
@@ -37,7 +37,7 @@ public class SpringbootHibernateOnetomanyOnetooneApplication {
 					patient.setNom(name);
 					patient.setDateNaissance(new Date());
 					patient.setMalade(false);
-					patientRepository.save(patient);
+					patientService.savePatient(patient);
 				});
 			Stream.of("Khalid","Abdelilah","Saiid")
 				.forEach(name -> {
@@ -45,13 +45,13 @@ public class SpringbootHibernateOnetomanyOnetooneApplication {
 					medecin.setNom(name);
 					medecin.setEmail(name + "gmail.com");
 					medecin.setSpecialite(Math.random()>0.5?"Cardio":"Dentiste");
-					medecinRepository.save(medecin);
+					medecinService.saveMedecin(medecin);
 			});
 			
-			Patient patient = patientRepository.findById(1L).orElse(null);
+			Patient patient = patientService.findPatientById(1L);
 		
 			
-			Medecin medecin = medecinRepository.findById(3L).orElse(null);
+			Medecin medecin = medecinService.findMedecinById(1L);
 		
 			
 			
@@ -61,15 +61,15 @@ public class SpringbootHibernateOnetomanyOnetooneApplication {
 			rendezVous.setMedecin(medecin);
 			rendezVous.setPatient(patient);
 			
-			hospitalService.saveRdv(rendezVous);
+			rendezVousService.saveRendezVous(rendezVous);
 			
-			RendezVous rdv = rendezVousRepository.findAll().get(0);
+			RendezVous rdv = rendezVousService.findAllRendezVous().get(0);
 			Consultation consultation = new Consultation();
 			consultation.setDateConsultation(new Date());
 			consultation.setRendezVous(rdv);
 			consultation.setRapport("rapport de la consultation ..");
 			
-			hospitalService.saveConsultation(consultation);
+			consultationService.saveConsultation(consultation);
 			
 			};
 			

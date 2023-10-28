@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -21,7 +23,8 @@ import lombok.NoArgsConstructor;
 public class RendezVous {
 
 	@Id 
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private Date date;
 	
 	@Enumerated(EnumType.STRING)
@@ -37,11 +40,11 @@ public class RendezVous {
 	@OneToOne(mappedBy = "rendezVous")
 	private Consultation consultation;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
