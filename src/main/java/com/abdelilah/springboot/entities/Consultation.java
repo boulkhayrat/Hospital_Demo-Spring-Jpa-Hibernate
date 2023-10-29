@@ -28,37 +28,7 @@ public class Consultation {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private RendezVous rendezVous;
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public Date getDateConsultation() {
-		return dateConsultation;
-	}
-
-	public void setDateConsultation(Date dateConsultation) {
-		this.dateConsultation = dateConsultation;
-	}
-
-	public String getRapport() {
-		return rapport;
-	}
-
-	public void setRapport(String rapport) {
-		this.rapport = rapport;
-	}
-
-	public RendezVous getRendezVous() {
-		return rendezVous;
-	}
-
-	public void setRendezVous(RendezVous rendezVous) {
-		this.rendezVous = rendezVous;
-	}
-	
 
 }

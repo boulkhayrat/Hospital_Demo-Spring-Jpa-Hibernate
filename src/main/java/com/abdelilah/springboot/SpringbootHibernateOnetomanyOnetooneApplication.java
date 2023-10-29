@@ -28,7 +28,7 @@ public class SpringbootHibernateOnetomanyOnetooneApplication {
 	}
 	
 	
-	@Bean
+/*	@Bean
 	CommandLineRunner start(IPatientService patientService, IMedecinService medecinService, IRendezVousService rendezVousService, IConsultationService consultationService) {
 		return args -> {
 			Stream.of("Mohamed","Ahmed","Mostafa")
@@ -74,7 +74,7 @@ public class SpringbootHibernateOnetomanyOnetooneApplication {
 			};
 			
 			
-		};
+		};*/
 }
 
 

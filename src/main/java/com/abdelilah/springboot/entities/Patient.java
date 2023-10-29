@@ -12,9 +12,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Patient {
@@ -30,44 +32,6 @@ public class Patient {
 	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
 	private Collection<RendezVous> rendezVous;
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public Date getDateNaissance() {
-		return dateNaissance;
-	}
-
-	public void setDateNaissance(Date dateNaissance) {
-		this.dateNaissance = dateNaissance;
-	}
-
-	public boolean isMalade() {
-		return malade;
-	}
-
-	public void setMalade(boolean malade) {
-		this.malade = malade;
-	}
-
-	public Collection<RendezVous> getRendezVous() {
-		return rendezVous;
-	}
-
-	public void setRendezVous(Collection<RendezVous> rendezVous) {
-		this.rendezVous = rendezVous;
-	}
 
 }
