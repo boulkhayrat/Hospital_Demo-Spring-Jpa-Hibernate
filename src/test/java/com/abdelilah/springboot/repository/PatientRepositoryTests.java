@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -87,6 +88,51 @@ public class PatientRepositoryTests {
 
 		Assertions.assertThat(patient1).isNotNull();
 
+
+
+	}
+
+	@Test
+	public void PatientRepository_UpdatePatient_ReturnPatient() {
+
+
+		Patient patient = Patient.builder()
+				.nom("Hamid")
+				.malade(true)
+				.dateNaissance(new Date())
+				.build();
+
+		patientRepository.save(patient);
+		Patient patient1 = patientRepository.findById(patient.getId()).get();
+
+		patient1.setNom("Abdel");
+		patient1.setMalade(true);
+
+		Patient updatedPatient = patientRepository.save(patient1);
+
+
+
+
+		Assertions.assertThat(updatedPatient.getNom()).isNotNull();
+		Assertions.assertThat(updatedPatient.isMalade()).isEqualTo(true);
+
+
+
+	}
+
+	@Test
+	public void PatientRepository_DeletePatient_ReturnEmpty(){
+		Patient patient = Patient.builder()
+				.nom("Abdelilah")
+				.malade(true)
+				.dateNaissance(new Date())
+				.build();
+		patientRepository.save(patient);
+
+		patientRepository.delete(patient);
+		Optional<Patient> patient1 = patientRepository.findById(patient.getId());
+
+		Assertions.assertThat(patient1).isEmpty();
 
 
 	}
