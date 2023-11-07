@@ -10,4 +10,5 @@ public interface IPatientService {
 	Patient updatePatient(Patient patient);
 	Patient findPatientById(Long id);
 	void deletePatient(Long id);
+	Boolean isNameValid(String name);
 }

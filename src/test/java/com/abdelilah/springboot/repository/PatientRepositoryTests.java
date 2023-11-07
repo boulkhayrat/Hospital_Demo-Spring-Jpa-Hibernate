@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Date;
 import java.util.List;
@@ -33,13 +34,14 @@ public class PatientRepositoryTests {
 		
 		
 		Patient savedPatient = patientRepository.save(patient);
-		
+
 		
 		Assertions.assertThat(savedPatient).isNotNull();
 		Assertions.assertThat(savedPatient.getId()).isGreaterThan(0);
 		
 		
 	}
+
 
 	@Test
 	public void PatientRepository_GetAll_ReturnMoreThanOnePatient(){
@@ -136,4 +138,34 @@ public class PatientRepositoryTests {
 
 
 	}
+	@Test
+	public void PatientRepository_findByName_ReturnMoreThanOnePatient(){
+
+		Patient patient = Patient.builder()
+				.nom("Abdelilah")
+				.malade(true)
+				.dateNaissance(new Date())
+				.build();
+		Patient patient1 = Patient.builder()
+				.nom("Anas")
+				.malade(true)
+				.dateNaissance(new Date())
+				.build();
+		Patient patient2 = Patient.builder()
+				.nom("Mostafa")
+				.malade(true)
+				.dateNaissance(new Date())
+				.build();
+
+		patientRepository.save(patient);
+		patientRepository.save(patient1);
+		patientRepository.save(patient2);
+
+		Patient patientList = patientRepository.findByNom("Anas");
+
+		Assertions.assertThat(patientList.getNom()).isEqualTo("Anas");
+
+
+	}
+
 }

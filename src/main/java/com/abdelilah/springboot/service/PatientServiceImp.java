@@ -79,4 +79,13 @@ public class PatientServiceImp implements IPatientService{
 		
 	}
 
+	@Override
+	public Boolean isNameValid(String name) {
+		if(name == null || name.contains("@")){
+			return false;
+		}
+		name = name.toUpperCase();
+		return name.matches("[A-Z]+");
+	}
+
 }
