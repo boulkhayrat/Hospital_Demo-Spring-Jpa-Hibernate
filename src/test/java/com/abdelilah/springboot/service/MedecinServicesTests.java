@@ -2,9 +2,7 @@ package com.abdelilah.springboot.service;
 
 
 import com.abdelilah.springboot.entities.Medecin;
-import com.abdelilah.springboot.entities.Patient;
 import com.abdelilah.springboot.repositories.MedecinRepository;
-import com.abdelilah.springboot.repositories.PatientRepository;
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
