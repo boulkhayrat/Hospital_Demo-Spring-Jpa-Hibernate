@@ -34,7 +34,7 @@ public class ConsultationRestController {
 	 }
 	 
 	 @GetMapping("/consultations/{id}")
-		public ResponseEntity<Consultation> getMedecinById(@PathVariable(value = "id") Long consultationId){
+		public ResponseEntity<Consultation> getConsultationById(@PathVariable(value = "id") Long consultationId){
 			
 	    	return ResponseEntity.ok(consultationService.findConsultationById(consultationId));
 	    			
