@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,13 +37,16 @@ public class PatientIntegrationTest {
 
 
     @Test
-    public void testGetPatients(){
-        given()
-                .when()
+    public void testGetAllPatients() {
+
+        RestAssured.baseURI = "http://localhost:8080";
+
+
+        when()
                 .get("/patients")
                 .then()
                 .statusCode(200)
-                .body("size",greaterThan(0));
+                .body("size()", greaterThan(0));
     }
 
 
