@@ -1,4 +1,4 @@
-package com.abdelilah.springboot;
+package com.abdelilah.springboot.restAssured;
 
 import com.abdelilah.springboot.entities.Medecin;
 import io.restassured.RestAssured;

@@ -1,6 +1,7 @@
-package com.abdelilah.springboot;
+package com.abdelilah.springboot.restAssured;
 
-import com.abdelilah.springboot.entities.Consultation;
+import com.abdelilah.springboot.entities.RendezVous;
+import com.abdelilah.springboot.entities.StatusRDV;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ConsultationIntegrationTest {
+public class RendezVousIntegrationTest {
 
     @BeforeEach
     public void setUp() {
@@ -25,74 +26,73 @@ public class ConsultationIntegrationTest {
     }
 
     @Test
-    public void testSaveConsultation(){
-        Consultation consultation = new Consultation();
-        consultation.setRapport("this is Rapport1 ...");
-        consultation.setDateConsultation(new Date());
+    public void testSaveRendezVous(){
+        RendezVous rendezVous = new RendezVous();
+        rendezVous.setStatus(StatusRDV.DONE);
+        rendezVous.setDate(new Date());
 
         given()
                 .contentType("application/json")
-                .body(consultation)
+                .body(rendezVous)
                 .when()
-                .post("/consultations")
+                .post("/rendezVouss")
                 .then()
                 .statusCode(200)
-                .body("rapport",equalTo("this is Rapport1 ..."));
+                .body("nom",equalTo("Abdelilah"));
     }
 
 
 
     @Test
-    public void testGetAllConsultations() {
+    public void testGetAllRendezVouss() {
 
         RestAssured.baseURI = "http://localhost:8080";
 
 
         when()
-                .get("/consultations")
+                .get("/rendezVouss")
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
     }
 
     @Test
-    public void testGetConsultationById() {
+    public void testGetRendezVousById() {
         given()
                 .pathParam("id", 1)
                 .when()
-                .get("/consultations/{id}")
+                .get("/rendezVouss/{id}")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1));
     }
 
     @Test
-    public void testUpdateConsultation() {
-        Consultation consultation1 = new Consultation();
-        consultation1.setId(1L);
-        consultation1.setDateConsultation(new Date());
-        consultation1.setRapport("this is the modified version of rapport .. ");
+    public void testUpdateRendezVous() {
+        RendezVous rendezVous1 = new RendezVous();
+        rendezVous1.setId(1L);
+        rendezVous1.setStatus(StatusRDV.CANCELED);
 
         given()
                 .log().all()
                 .pathParam("id", 1)
                 .contentType("application/json")
-                .body(consultation1)
+                .body(rendezVous1)
                 .when()
-                .put("/consultations/{id}")
+                .put("/rendezVouss/{id}")
                 .then()
                 .log().all()
                 .statusCode(200)
-                .body("rapport", equalTo("this is the modified version of rapport .. "));
+                .body("nom", equalTo("Anas"));
     }
 
     @Test
-    public void testDeleteConsultation() {
+    public void testDeleteRendezVous() {
         given()
                 .log().all()
                 .pathParam("id", 1)
                 .when()
-                .delete("/consultations/{id}")
+                .delete("/rendezVouss/{id}")
                 .then()
                 .log().all()
                 .statusCode(200)
