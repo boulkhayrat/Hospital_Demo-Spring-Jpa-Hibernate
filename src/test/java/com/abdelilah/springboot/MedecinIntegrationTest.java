@@ -1,6 +1,6 @@
 package com.abdelilah.springboot;
 
-import com.abdelilah.springboot.entities.Patient;
+import com.abdelilah.springboot.entities.Medecin;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,11 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PatientIntegrationTest {
+public class MedecinIntegrationTest {
 
     @BeforeEach
     public void setUp() {
@@ -22,15 +23,15 @@ public class PatientIntegrationTest {
     }
 
     @Test
-    public void testSavePatient(){
-        Patient patient = new Patient();
-        patient.setNom("Abdelilah");
+    public void testSaveMedecin(){
+        Medecin medecin = new Medecin();
+        medecin.setNom("Abdelilah");
 
         given()
                 .contentType("application/json")
-                .body(patient)
+                .body(medecin)
                 .when()
-                .post("/patients")
+                .post("/medecins")
                 .then()
                 .statusCode(200)
                 .body("nom",equalTo("Abdelilah"));
@@ -39,42 +40,42 @@ public class PatientIntegrationTest {
 
 
     @Test
-    public void testGetAllPatients() {
+    public void testGetAllMedecins() {
 
         RestAssured.baseURI = "http://localhost:8080";
 
 
         when()
-                .get("/patients")
+                .get("/medecins")
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
     }
 
     @Test
-    public void testGetPatientById() {
+    public void testGetMedecinById() {
         given()
                 .pathParam("id", 1)
                 .when()
-                .get("/patients/{id}")
+                .get("/medecins/{id}")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1));
     }
 
     @Test
-    public void testUpdatePatient() {
-        Patient patient1 = new Patient();
-        patient1.setId(1L);
-        patient1.setNom("Anas");
+    public void testUpdateMedecin() {
+        Medecin medecin1 = new Medecin();
+        medecin1.setId(1L);
+        medecin1.setNom("Anas");
 
         given()
                 .log().all()
                 .pathParam("id", 1)
                 .contentType("application/json")
-                .body(patient1)
+                .body(medecin1)
                 .when()
-                .put("/patients/{id}")
+                .put("/medecins/{id}")
                 .then()
                 .log().all()
                 .statusCode(200)
@@ -82,12 +83,12 @@ public class PatientIntegrationTest {
     }
 
     @Test
-    public void testDeletePatient() {
+    public void testDeleteMedecin() {
         given()
                 .log().all()
                 .pathParam("id", 1)
                 .when()
-                .delete("/patients/{id}")
+                .delete("/medecins/{id}")
                 .then()
                 .log().all()
                 .statusCode(200)

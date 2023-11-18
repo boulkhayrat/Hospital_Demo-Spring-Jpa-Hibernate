@@ -1,19 +1,22 @@
 package com.abdelilah.springboot;
 
-import com.abdelilah.springboot.entities.Patient;
+import com.abdelilah.springboot.entities.Consultation;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PatientIntegrationTest {
+public class ConsultationIntegrationTest {
 
     @BeforeEach
     public void setUp() {
@@ -22,72 +25,74 @@ public class PatientIntegrationTest {
     }
 
     @Test
-    public void testSavePatient(){
-        Patient patient = new Patient();
-        patient.setNom("Abdelilah");
+    public void testSaveConsultation(){
+        Consultation consultation = new Consultation();
+        consultation.setRapport("this is Rapport1 ...");
+        consultation.setDateConsultation(new Date());
 
         given()
                 .contentType("application/json")
-                .body(patient)
+                .body(consultation)
                 .when()
-                .post("/patients")
+                .post("/consultations")
                 .then()
                 .statusCode(200)
-                .body("nom",equalTo("Abdelilah"));
+                .body("rapport",equalTo("this is Rapport1 ..."));
     }
 
 
 
     @Test
-    public void testGetAllPatients() {
+    public void testGetAllConsultations() {
 
         RestAssured.baseURI = "http://localhost:8080";
 
 
         when()
-                .get("/patients")
+                .get("/consultations")
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
     }
 
     @Test
-    public void testGetPatientById() {
+    public void testGetConsultationById() {
         given()
                 .pathParam("id", 1)
                 .when()
-                .get("/patients/{id}")
+                .get("/consultations/{id}")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1));
     }
 
     @Test
-    public void testUpdatePatient() {
-        Patient patient1 = new Patient();
-        patient1.setId(1L);
-        patient1.setNom("Anas");
+    public void testUpdateConsultation() {
+        Consultation consultation1 = new Consultation();
+        consultation1.setId(1L);
+        consultation1.setDateConsultation(new Date());
+        consultation1.setRapport("this is the modified version of rapport .. ");
 
         given()
                 .log().all()
                 .pathParam("id", 1)
                 .contentType("application/json")
-                .body(patient1)
+                .body(consultation1)
                 .when()
-                .put("/patients/{id}")
+                .put("/consultations/{id}")
                 .then()
                 .log().all()
                 .statusCode(200)
-                .body("nom", equalTo("Anas"));
+                .body("rapport", equalTo("this is the modified version of rapport .. "));
     }
 
     @Test
-    public void testDeletePatient() {
+    public void testDeleteConsultation() {
         given()
                 .log().all()
                 .pathParam("id", 1)
                 .when()
-                .delete("/patients/{id}")
+                .delete("/consultations/{id}")
                 .then()
                 .log().all()
                 .statusCode(200)
