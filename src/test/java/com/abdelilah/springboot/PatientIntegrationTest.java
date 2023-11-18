@@ -49,6 +49,47 @@ public class PatientIntegrationTest {
                 .body("size()", greaterThan(0));
     }
 
+    @Test
+    public void testGetPatientById() {
+        given()
+                .pathParam("id", 1)
+                .when()
+                .get("/patients/{id}")
+                .then()
+                .statusCode(200)
+                .body("id", equalTo(1));
+    }
 
+    @Test
+    public void testUpdatePatient() {
+        Patient patient1 = new Patient();
+        patient1.setId(1L);
+        patient1.setNom("Anas");
+
+        given()
+                .log().all()
+                .pathParam("id", 1)
+                .contentType("application/json")
+                .body(patient1)
+                .when()
+                .put("/patients/{id}")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("nom", equalTo("Anas"));
+    }
+
+    @Test
+    public void testDeletePatient() {
+        given()
+                .log().all()
+                .pathParam("id", 1)
+                .when()
+                .delete("/patients/{id}")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("deleted", equalTo(true));
+    }
 
 }
